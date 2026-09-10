@@ -1,6 +1,8 @@
 {
   "functions": {
-    "qr.js": {}
+    "qr.js": {
+      "runtime": "nodejs20.x"
+    }
   },
   "headers": [
     {
