@@ -33,7 +33,7 @@ console.log('主机名:', urlWithoutParams);
 host.innerHTML = urlWithoutParams + '<font color="red">?url=你提供的网址</font>' ;
 const params = new URLSearchParams(window.location.search);
 let url = params.get('url'); 
-textInput.value=url || "https://www.baidu.com"; // 如果URL 参数为空，则使用输入框的值
+textInput.value=url || urlWithoutParams; // 如果URL 参数为空，则使用输入框的值
 var qrcodeElement = document.getElementById("qrcode");
 document.getElementById("generateBtn").addEventListener("click", gen);
 gen () ;
