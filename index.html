@@ -5,27 +5,279 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>  <!-- CDN 方式 -->
   <style>
     body {
+      :root {
+        --ink: #172033;
+        --muted: #687386;
+        --line: #e4e8ef;
+        --accent: #1769e0;
+        --accent-dark: #0d4fae;
+        --surface: #ffffff;
+        --soft: #f5f7fb;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
       font-family: Arial, sans-serif;
-      text-align: center;
-      margin-top: 50px;
-    }
+        min-height: 100vh;
+        margin: 0;
+        padding: 48px 20px;
+        color: var(--ink);
+        font-family: "Segoe UI", "Microsoft YaHei", sans-serif;
+        background: #eef3f9;
+        background-image: radial-gradient(#d9e3f0 1px, transparent 1px);
+        background-size: 20px 20px;
+      }
+
+      .app {
+        width: min(100%, 860px);
+        margin: 0 auto;
+        overflow: hidden;
+        background: var(--surface);
+        border: 1px solid rgba(255, 255, 255, .8);
+        border-radius: 18px;
+        box-shadow: 0 18px 50px rgba(35, 57, 87, .14);
+      }
+
+      .hero {
+        padding: 30px 36px 26px;
+        text-align: left;
+        background: linear-gradient(120deg, #123b70, #1769e0);
+        color: #fff;
+      }
+
+      .eyebrow {
+        margin: 0 0 8px;
+        color: #b9d7ff;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: clamp(26px, 5vw, 38px);
+        letter-spacing: 0;
+      }
+
+      .hero p {
+        margin: 10px 0 0;
+        color: #dbeaff;
+        font-size: 14px;
+      }
+
+      .workspace {
+        display: grid;
+        grid-template-columns: 280px 1fr;
+        gap: 36px;
+        align-items: center;
+        padding: 36px;
+      }
+
+      .preview {
+        display: grid;
+        min-height: 280px;
+        place-items: center;
+        padding: 24px;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        background: var(--soft);
+      }
+
     #qrcode {
       width: 200px;
       height: 200px;
-      margin-top: 15px;
       margin: 0 auto;
+        background: #fff;
+        box-shadow: 0 8px 18px rgba(34, 50, 75, .12);
+      }
+
+      .controls {
+        text-align: left;
+      }
+
+      .controls h2 {
+        margin: 0 0 6px;
+        font-size: 20px;
+      }
+
+      .controls > p {
+        margin: 0 0 20px;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      .field-label {
+        display: block;
+        margin-bottom: 8px;
+        color: var(--muted);
+        font-size: 13px;
+        font-weight: 700;
+      }
+
+      #textInput {
+        width: 100%;
+        height: 44px;
+        padding: 0 13px;
+        border: 1px solid #cfd6e1;
+        border-radius: 8px;
+        outline: none;
+        color: var(--ink);
+        font: inherit;
+        transition: border-color .2s, box-shadow .2s;
+      }
+
+      #textInput:focus {
+        border-color: var(--accent);
+        box-shadow: 0 0 0 3px rgba(23, 105, 224, .14);
+      }
+
+      .settings {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin: 18px 0 22px;
+      }
+
+      .settings label {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .settings input[type="color"] {
+        width: 34px;
+        height: 30px;
+        padding: 2px;
+        border: 1px solid #cfd6e1;
+        border-radius: 6px;
+        background: #fff;
+        cursor: pointer;
+      }
+
+      .actions {
+        display: flex;
+        gap: 10px;
+      }
+
+      button {
+        min-height: 42px;
+        padding: 0 18px;
+        border: 0;
+        border-radius: 8px;
+        font: inherit;
+        font-size: 14px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: transform .2s, box-shadow .2s, background .2s;
+      }
+
+      button:hover {
+        transform: translateY(-1px);
+      }
+
+      #generateBtn {
+        background: var(--accent);
+        color: #000000;
+        box-shadow: 0 6px 12px rgba(23, 105, 224, .2);
+      }
+
+      #generateBtn:hover {
+        background: var(--accent-dark);
+      }
+
+      #downloadBtn {
+        border: 1px solid #cbd5e3;
+        background: #fff;
+        color: var(--ink);
+      }
+
+      #downloadBtn:hover {
+        background: #f3f6fa;
+      }
+
+      .url-tip {
+        padding: 16px 36px;
+        border-top: 1px solid var(--line);
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.7;
+        text-align: left;
+        background: #fbfcfe;
+      }
+
+      .url-tip font {
+        color: #d23b3b;
+    }
+
+      @media (max-width: 680px) {
+        body {
+          padding: 20px 12px;
+        }
+
+        .hero,
+        .workspace,
+        .url-tip {
+          padding-left: 22px;
+          padding-right: 22px;
+        }
+
+        .workspace {
+          grid-template-columns: 1fr;
+          gap: 24px;
+          padding-top: 24px;
+          padding-bottom: 24px;
+        }
+
+        .preview {
+          min-height: 240px;
+        }
+
+        .actions button {
+          flex: 1;
+          padding: 0 10px;
+        }
     }
   </style>
 </head>
 <body>
 
-  <h1>二维码生成器</h1>
-  <div id="qrcode"></div>
-  <p>请输入内容生成二维码：</p>
-  <input type="text" id="textInput" placeholder="输入内容" value="https://www.baidu.com">
-  <button id="generateBtn">生成二维码</button>
-<br>
-  也可在URL中添加<font color="red">参数</font>，例如：<div id="host"><font color="red">?url=https://www.baidu.com</font>></div>
+  <main class="app">
+    <header class="hero">
+      <p class="eyebrow">Quick utility</p>
+      <h1>二维码生成器</h1>
+      <p>输入内容，生成清晰、可下载的二维码图片</p>
+    </header>
+
+    <section class="workspace">
+      <div class="preview">
+        <div id="qrcode"></div>
+      </div>
+
+      <div class="controls">
+        <h2>生成二维码</h2>
+        <p>支持网址、文字和自定义颜色。</p>
+        <label class="field-label" for="textInput">二维码内容</label>
+        <input type="text" id="textInput" placeholder="输入内容" value="https://www.baidu.com">
+        <div class="settings">
+          <label>前景色 <input type="color" id="foregroundColor" value="#000000"></label>
+          <label>背景色 <input type="color" id="backgroundColor" value="#ffffff"></label>
+        </div>
+        <div class="actions">
+          <button id="generateBtn">生成二维码图片</button>
+          <button id="downloadBtn">下载二维码图片</button>
+        </div>
+      </div>
+    </section>
+
+    <div class="url-tip">
+      也可在 URL 中添加<font color="red">参数</font>，例如：<span id="host"><font color="red">?url=https://www.baidu.com</font></span>
+    </div>
+  </main>
 <script>
 
 const urlWithoutParams = window.location.origin + window.location.pathname;
@@ -36,6 +288,9 @@ let url = params.get('url');
 textInput.value=url || urlWithoutParams; // 如果URL 参数为空，则使用输入框的值
 var qrcodeElement = document.getElementById("qrcode");
 document.getElementById("generateBtn").addEventListener("click", gen);
+document.getElementById("downloadBtn").addEventListener("click", downloadQRCode);
+document.getElementById("foregroundColor").addEventListener("input", gen);
+document.getElementById("backgroundColor").addEventListener("input", gen);
 gen () ;
 url="";
 function gen () {
@@ -45,17 +300,44 @@ function gen () {
   // text = url || text; // 如果URL 参数为空，则使用输入框的值
   console.log("生成二维码的内容:", text);
   if (text) {
-    var qrCodeInstance = new QRCode(qrcodeElement, {
+    new QRCode(qrcodeElement, {
       text: text,
       width: 200,
       height: 200,
-      colorDark: "#000000",
-      colorLight: "#ffffff",
+      colorDark: document.getElementById("foregroundColor").value,
+      colorLight: document.getElementById("backgroundColor").value,
       correctLevel: QRCode.CorrectLevel.H // 纠错等级
     });
   } else {
     alert("请输入内容生成二维码");
   }
+}
+
+function downloadQRCode() {
+  var source = qrcodeElement.querySelector("canvas") || qrcodeElement.querySelector("img");
+
+  if (!source) {
+    alert("请先生成二维码");
+    return;
+  }
+
+  var qrSize = 200;
+  var borderSize = 16;
+  var outputSize = qrSize + borderSize * 2;
+  var outputCanvas = document.createElement("canvas");
+  var context = outputCanvas.getContext("2d");
+  var backgroundColor = document.getElementById("backgroundColor").value;
+
+  outputCanvas.width = outputSize;
+  outputCanvas.height = outputSize;
+  context.fillStyle = backgroundColor;
+  context.fillRect(0, 0, outputSize, outputSize);
+  context.drawImage(source, borderSize, borderSize, qrSize, qrSize);
+
+  var link = document.createElement("a");
+  link.download = "qrcode.png";
+  link.href = outputCanvas.toDataURL("image/png");
+  link.click();
 }
 
 
