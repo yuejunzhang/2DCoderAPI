@@ -1,9 +1,7 @@
 {
-  "functions": {
-    "qr.js": {
-      "runtime": "nodejs20.x"
-    }
-  },
+  "rewrites": [
+    { "source": "/qr", "destination": "/api/qr" }
+  ],
   "headers": [
     {
       "source": "/(.*)",

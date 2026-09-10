@@ -1,6 +1,6 @@
 ﻿const http = require('http');
 const url = require('url');
-const qrHandler = require('./qr.js');
+const qrHandler = require('./api/qr.js');
 
 const server = http.createServer((req, res) => {
   const parsedUrl = url.parse(req.url, true);
