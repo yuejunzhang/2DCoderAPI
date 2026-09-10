@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>二维码生成器</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>  <!-- CDN 方式 -->
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 50px;
+    }
+    #qrcode {
+      width: 200px;
+      height: 200px;
+      margin-top: 15px;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>二维码生成器</h1>
+  <div id="qrcode"></div>
+  <p>请输入内容生成二维码：</p>
+  <input type="text" id="textInput" placeholder="输入内容" value="https://www.baidu.com">
+  <button id="generateBtn">生成二维码</button>
+<br>
+  也可在URL中添加<font color="red">参数</font>，例如：<div id="host"><font color="red">?url=https://www.baidu.com</font>></div>
+<script>
+
+const urlWithoutParams = window.location.origin + window.location.pathname;
+console.log('主机名:', urlWithoutParams);
+host.innerHTML = urlWithoutParams + '<font color="red">?url=你提供的网址</font>' ;
+const params = new URLSearchParams(window.location.search);
+let url = params.get('url'); 
+textInput.value=url || "https://www.baidu.com"; // 如果URL 参数为空，则使用输入框的值
+var qrcodeElement = document.getElementById("qrcode");
+document.getElementById("generateBtn").addEventListener("click", gen);
+gen () ;
+url="";
+function gen () {
+  // 清除之前的二维码
+  qrcodeElement.innerHTML = '';
+  var text = document.getElementById("textInput").value;
+  // text = url || text; // 如果URL 参数为空，则使用输入框的值
+  console.log("生成二维码的内容:", text);
+  if (text) {
+    var qrCodeInstance = new QRCode(qrcodeElement, {
+      text: text,
+      width: 200,
+      height: 200,
+      colorDark: "#000000",
+      colorLight: "#ffffff",
+      correctLevel: QRCode.CorrectLevel.H // 纠错等级
+    });
+  } else {
+    alert("请输入内容生成二维码");
+  }
+}
+
+
+</script>
+
+</body>
+</html>
