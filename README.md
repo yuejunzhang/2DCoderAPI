@@ -26,7 +26,7 @@ node local-server.js
 3. 访问二维码接口
 
 ```text
-http://localhost:3000/qr?text=Hello
+http://localhost:3000/api/qr?text=Hello
 ```
 
 ## API
@@ -34,13 +34,13 @@ http://localhost:3000/qr?text=Hello
 ### 生成二维码
 
 ```text
-GET /?text=你的内容
+GET api/qr?text=你的内容
 ```
 
 ### 可选参数
 
 ```text
-GET /?text=Hello&dark=FF0000&light=00FF00
+GET api/qr?text=Hello&dark=FF0000&light=00FF00
 ```
 
 - `text`: 二维码内容（必填）
@@ -65,5 +65,5 @@ GET /?text=Hello&dark=FF0000&light=00FF00
 例如：
 
 ```html
-<img src="http://localhost:3000/?text=Hello" alt="QR Code" />
+<img src="http://localhost:3000/qpi/qr?text=Hello" alt="QR Code" />
 ```
