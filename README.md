@@ -65,5 +65,21 @@ GET api/qr?text=Hello&dark=FF0000&light=00FF00
 例如：
 
 ```html
-<img src="http://localhost:3000/qpi/qr?text=Hello" alt="QR Code" />
+<img src="http://localhost:3000/api/qr?text=Hello" alt="QR Code" />
+```
+
+
+```html
+<!DOCTYPE html>
+<body>
+<img id="qrpicture"  />
+<p>扫码分享本站</p>
+</body>
+<script>
+var qrcodeElement = document.getElementById("qrpicture");
+const url= window.location.origin + window.location.pathname;
+qrpicture.src="https://localhost:3000/api/qr?text="+url;
+qrpicture.title=url;
+</script>
+</html>
 ```
